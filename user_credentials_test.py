@@ -1,6 +1,7 @@
 import unittest #importing the unit test
 import pyperclip
-from user_credentials import User, Credential 
+from user_credentials import User
+from user_credentials import Credential
 
 
 class TestUser(unittest.TestCase):
@@ -48,6 +49,15 @@ class TestCredentials(unittest.TestCase):
         Set up method to run before each test cases.  
         '''
         self.new_account = Credential("Twitter","Hiasco","McGee")
+
+    def test_save_credentials(self):
+        '''
+        Test to check if the new users credentials are saved into the users list
+        '''
+        self.new_credential.save_credentials()
+        self.snapchat = Credential('Snapchat','Ferty j','jamals')
+        self.snapchat.save_credentials()
+        self.assertEqual(len(Credential.credential_list),2) 
 
 
 

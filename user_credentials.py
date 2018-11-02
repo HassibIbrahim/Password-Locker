@@ -28,3 +28,12 @@ class Credential:
     '''
     Class that creates instances of user credentials 
     '''
+    credential_list = []
+
+    def __init__(self, site_name, account_name, password):
+        '''
+        __init__ method that define properties held in this object
+        '''
+        self.site_name = site_name
+        self.account_name = account_name
+        self.password = password
