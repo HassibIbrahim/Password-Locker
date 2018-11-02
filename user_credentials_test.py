@@ -3,7 +3,7 @@ import pyperclip
 from user_credentials import User 
 
 
-class TestUserCredentials(unittest.TestCase):
+class TestUser(unittest.TestCase):
     '''
     Test class that defines test cases for the contact class behaviours.
 

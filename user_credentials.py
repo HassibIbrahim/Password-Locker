@@ -1,5 +1,6 @@
 import pyperclip
 
+global users_list
 
 class User:
     """
@@ -16,3 +17,9 @@ class User:
         self.last_name= last_name
         self.email= email
         self.password= password
+
+    def save_user(self):
+        '''
+        function to save new created instance of users
+        '''
+        User.user_list.append(self)
