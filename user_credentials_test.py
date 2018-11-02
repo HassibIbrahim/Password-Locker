@@ -1,11 +1,11 @@
 import unittest #importing the unit test
 import pyperclip
-from user_credentials import User 
+from user_credentials import User, Credential 
 
 
 class TestUser(unittest.TestCase):
     '''
-    Test class that defines test cases for the contact class behaviours.
+    Test class that defines test cases for the user class behaviours.
 
     Args:
         unittest.TestCase :TestCase class that helps in creating test cases 
@@ -35,6 +35,22 @@ class TestUser(unittest.TestCase):
 
         self.new_user.save_user()
         self.assertEqual(len(User.user_list),1)
+
+class TestCredentials(unittest.TestCase):
+    '''
+    Test class that identifies test cases for the credentials class behaviours.
+
+    Args:
+        unittest.TestCase :TestCase class that helps in creating test cases 
+    '''
+    def setUp(self):
+        '''
+        Set up method to run before each test cases.  
+        '''
+        self.new_account = Credential("Twitter","Hiasco","McGee")
+
+
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

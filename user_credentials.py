@@ -23,3 +23,8 @@ class User:
         function to save new created instance of users
         '''
         User.user_list.append(self)
+
+class Credential:
+    '''
+    Class that creates instances of user credentials 
+    '''
