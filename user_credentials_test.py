@@ -61,7 +61,7 @@ class TestCredentials(unittest.TestCase):
         self.assertEqual(self.new_account.site_name, 'Twitter')
         self.assertEqual(self.new_account.account_name, 'Hiasco')
         self.assertEqual(self.new_account.password, 'McGee')
-
+   
     def test_save_credentials(self):
         '''
         test_save_credentials to see if the new account information is saved into the appropriate list
@@ -71,12 +71,28 @@ class TestCredentials(unittest.TestCase):
         self.facebook.save_credentials()
         self.assertEqual(len(Credential.credential_list), 2)
 
+    def tearDown(self):
+        '''
+        Function to clear the credentials list after each test
+        '''
+        Credential.credential_list = []      
+
     def test_display_credentials(self):
         '''
         test_display_credentials to see if the new information can be displayed
         '''
+        self.new_credential.save_credentials()
+        self.facebook = Credential('Facebook','Loso','psd001')
+        self.facebook.save_credentials()
+
         self.assertListEqual(Credential.display_credentials(),Credential.credential_list)
 
+    def test_copy_credential(self):
+        '''
+        Test to check if the copy a credential method copies the correct account info
+        '''
+        self.new_account.save_credentials()
+        self.assertEqual(self.new_account,pyperclip.paste())
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
