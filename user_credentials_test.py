@@ -87,17 +87,25 @@ class TestCredentials(unittest.TestCase):
 
         self.assertListEqual(Credential.display_credentials(),Credential.credential_list)
 
-    def test_find_by_site(self):
+    def test_find_by_site_name(self):
         '''
         test to find account info
         '''
         self.new_credential.save_credentials()
-        self.facebook = Credential('Facebook','Loso','psd001')
-        self.facebook.save_credentials()
+        facebook = Credential('Facebook','Loso','psd001')
+        facebook.save_credentials()
+        credential_exists = Credential.find_by_site_name('Twitter')
 
         self.assertEqual(credential_exists,facebook)
 
 
+    def test_copy_credential(self):
+        '''
+        Test to check if the copy a credential method copies the correct account info
+        '''
+        self.new_account.save_credentials()
+        Credential.copy_credential(self.new_account.site_name)
+        self.assertEqual(str(f"Site Name: {self.new_credential.site_name} - UserName: {self.new_credential.site_name} - Password: {self.new_credential.password}"),pyperclip.paste())
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

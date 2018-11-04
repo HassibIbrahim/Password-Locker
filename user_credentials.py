@@ -59,3 +59,13 @@ class Credential:
         for credential in cls.credential_list:
             if credential.site_name == site_name:
                 return Credential
+
+    @classmethod
+    def copy_credential(cls,site_name):
+        '''
+        Class method that copies account info adjacent to site entered 
+        '''
+        find_credential = cls.find_by_site_name(site_name)
+        pyperclip.copy(f'Site Name: {find_credential.site_name} - UserName: {find_credential.site_name} - Password: {find_credential.password}')
+
+    
