@@ -50,3 +50,12 @@ class Credential:
         class method to display the list of credentials saved
         '''
         return cls.credential_list
+
+    @classmethod
+    def find_by_site_name(cls, site_name):
+        '''
+        Method to input site name and output matching information from site name
+        '''
+        for credential in cls.credential_list:
+            if credential.site_name == site_name:
+                return Credential
