@@ -50,23 +50,22 @@ class TestCredentials(unittest.TestCase):
         '''
         self.new_account = Credential("Twitter","Hiasco","McGee")
 
-    # # def test_save_credentials(self):
-    #     '''
-    #     Test to check if the new credentials information are saved into the users credential list
-    #     '''
-    #     self.new_credentials.save_credentials ()
-    #     self.new_credentials = Credential('Twitter','Hiasco','McGee')
-    #     self.twitter.save_credential ()
-    #     self.assertEqual(len(Credential.credential_list),2) 
-
-    def test_create(self):
+    def test_init_(self):
         '''
-        Testing if the new credential is saved into the list
+        test_init test case to test if the object is initialized properly
         '''
-        self.new_user.create_account()
-        self.assertEqual(len(Credential.credential_list),1)
+        self.assertEqual(self.new_account.site_name,'Twitter')
+        self.assertEqual(self.new_account.account_name,'Hiasco')
+        self.assertEqual(self.new_account.password,'McGee') 
 
-
+    def test_save_credentials(self):
+        '''
+        test_save_credentials to see if the new account information is saved into the appropriate list
+        '''
+        self.new_account.save_credentials()
+        self.facebook = Credential('Facebook','Loso','psd001')
+        self.facebook.save_credentials()
+        self.assertEqual(len(Credential.credential_list),2)
 
     
 
