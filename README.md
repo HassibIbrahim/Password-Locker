@@ -33,7 +33,7 @@ As a user you can:
         $ python3.7 user_credentials_test.py
         
 ## Technologies Used
-* Python3.6
+* Python3.7
 
 ## License
 MIT 2018 
