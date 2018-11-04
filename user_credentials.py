@@ -43,3 +43,10 @@ class Credential:
 	        Function to save a newly created user instance
 	        '''
             Credential.credential_list.append(self)
+
+    @classmethod
+    def display_credentials(cls):
+        '''
+        class method to display the list of credentials saved
+        '''
+        return cls.credential_list
