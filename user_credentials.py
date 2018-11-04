@@ -9,14 +9,13 @@ class User:
     """
     user_list = []
 
-    def __init__(self, first_name, last_name, email, password):
+    def __init__(self, first_name, last_name, password):
         '''
         __init__ method that define properties held in our objects.
         '''
 
         self.first_name = first_name
         self.last_name = last_name
-        self.email = email
         self.password = password
 
     def save_user(self):
@@ -31,46 +30,54 @@ class Credential:
     Class that creates instances of user credentials
     '''
     credential_list = []
+    user_credentials_list = []
+
 
     @classmethod
     def check_user(cls,first_name,password):
         '''
-        Method to confirm matching data in users_list
+        Method to confirm matching data in user_list
         '''
-        for user in User.users_list:
-            if password == user.password and first_name == user.first_name:
-                return True
-            return False
+        current_user = ''
+        for user in User.user_list:
+            if (user.first_name == first_name and user.password == password):
+                current_user = user.first_name
+                return current_user
+              
 
 
-    def __init__(self, site_name, account_name, password):
+    def __init__(self,user_name, site_name, account_name, password):
         '''
         __init__ method that define properties held in this object
         '''
+        self.user_name = user_name
         self.site_name = site_name
         self.account_name = account_name
         self.password = password
 
     def save_credentials(self):
             '''
-	        Function to save a newly created user instance
+	        Function to save a new user instance
 	        '''
             Credential.credential_list.append(self)
 
-    def generate_password(self, size =8,char=string.ascii_uppercase+ ascii_lowercase + string.digits): 
+    def generate_password(self,size =8,char=string.ascii_uppercase+ string.ascii_lowercase + string.digits): 
         '''
         Function to generate a password
         '''  
         gen_pass=''.join(random.choice(char) for _ in range(size))
-        self.password = gen_pass
-        return self.password
+        return gen_pass
 
     @classmethod
-    def display_credentials(cls):
+    def display_credentials(cls,user_name):
         '''
         class method to display the list of credentials saved
         '''
-        return cls.credential_list
+        user_credentials_list = []
+        for credential in cls.credential_list:
+            if credential.user_name == user_name:
+                user_credentials_list.append(credential)
+        return user_credentials_list
 
     @classmethod
     def find_by_site_name(cls, site_name):
@@ -79,14 +86,13 @@ class Credential:
         '''
         for credential in cls.credential_list:
             if credential.site_name == site_name:
-                return Credential
+                return credential
 
     @classmethod
     def copy_credential(cls,site_name):
         '''
         Class method that copies account info adjacent to site entered 
         '''
-        find_credential = cls.find_by_site_name(site_name)
-        pyperclip.copy(f'Site Name: {find_credential.site_name} - UserName: {find_credential.site_name} - Password: {find_credential.password}')
-
+        find_credential = Credential.find_by_site_name(site_name)
+        return pyperclip.copy(find_credential.password)
     

@@ -1,4 +1,4 @@
-import unittest  # importing the unit test
+import unittest  
 import pyperclip
 from user_credentials import User
 from user_credentials import Credential
@@ -17,7 +17,7 @@ class TestUser(unittest.TestCase):
         '''
         Set up method to run before each test cases.  
         '''
-        self.new_user = User("Ibrahim", "Hassib", "ihassib@gmail.com", "McGee")
+        self.new_user = User("Ibrahim", "Hassib", "McGee")
 
     def test_init(self):
         '''
@@ -26,7 +26,6 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(self.new_user.first_name, "Ibrahim")
         self.assertEqual(self.new_user.last_name, "Hassib")
-        self.assertEqual(self.new_user.email, "ihassib@gmail.com")
         self.assertEqual(self.new_user.password, "McGee")
 
     def test_save_user(self):
@@ -47,18 +46,35 @@ class TestCredentials(unittest.TestCase):
         unittest.TestCase :TestCase class that helps in creating test cases 
     '''
 
+    def test_check_user(self):
+        '''
+        Function to test whether the login in function check_user works as expected
+        '''
+        self.new_user = User('Ibrahim','Hassib','McGee')
+        self.new_user.save_user()
+        user2 = User('Loso','Wii','psd001')
+        user2.save_user()
+
+        for user in User.user_list:
+            if user.first_name == user2.first_name and user.password == user2.password:
+                current_user = user.first_name
+        return current_user
+
+        self.assertEqual(current_user,Credential.check_user(user2.password,user2.first_name))
+
     def setUp(self):
         '''
         Set up method to run before each test cases.  
         '''
-        self.new_account = Credential("Twitter", "Hiasco", "McGee")
+        self.new_account = Credential("Twitter", "Hiasco","Gwala", "McGee")
 
     def test_init_(self):
         '''
         test_init test case to test if the object is initialized properly
         '''
         self.assertEqual(self.new_account.site_name, 'Twitter')
-        self.assertEqual(self.new_account.account_name, 'Hiasco')
+        self.assertEqual(self.new_account.account_name, 'twitter')
+        self.assertEqual(self.new_account.account_name,'Gwala')
         self.assertEqual(self.new_account.password, 'McGee')
    
     def test_save_credentials(self):
@@ -66,7 +82,7 @@ class TestCredentials(unittest.TestCase):
         test_save_credentials to see if the new account information is saved into the appropriate list
         '''
         self.new_account.save_credentials()
-        self.facebook = Credential('Facebook', 'Loso', 'psd001')
+        self.facebook = Credential('Facebook', 'Loso', 'Gwala', 'psd001')
         self.facebook.save_credentials()
         self.assertEqual(len(Credential.credential_list), 2)
 
@@ -74,24 +90,26 @@ class TestCredentials(unittest.TestCase):
         '''
         Function to clear the credentials list after each test
         '''
-        Credential.credential_list = []      
+        Credential.credential_list = []
+        User.user_list = []      
 
     def test_display_credentials(self):
         '''
         test_display_credentials to see if the new information can be displayed
         '''
-        self.new_credential.save_credentials()
-        self.facebook = Credential('Facebook','Loso','psd001')
-        self.facebook.save_credentials()
-
-        self.assertListEqual(Credential.display_credentials(),Credential.credential_list)
+        self.new_account.save_credentials()
+        facebook = Credential('Facebook','Loso','Gwala','psd001')
+        facebook.save_credentials()
+        google = Credential('bob','google','nutty','psd047')
+        google.save_credentials()
+        self.assertListEqual(len(Credential.display_credentials(facebook.user_name)),2)
 
     def test_find_by_site_name(self):
         '''
         test to find account info
         '''
-        self.new_credential.save_credentials()
-        facebook = Credential('Facebook','Loso','psd001')
+        self.new_account.save_credentials()
+        facebook = Credential('Facebook','Loso','Gwala','psd001')
         facebook.save_credentials()
         credential_exists = Credential.find_by_site_name('Twitter')
 
@@ -103,8 +121,15 @@ class TestCredentials(unittest.TestCase):
         Test to check if the copy a credential method copies the correct account info
         '''
         self.new_account.save_credentials()
+        facebook = Credential('Facebook','Loso','Gwala','psd001') 
+        facebook.save_credentials()
+        find_credential = None
+        for credential in Credential.user_credentials_list:
+            find_credential =Credential.find_by_site_name(credential.site_name)
+            return pyperclip.copy(find_credential.password)
         Credential.copy_credential(self.new_account.site_name)
-        self.assertEqual(str(f"Site Name: {self.new_credential.site_name} - UserName: {self.new_credential.site_name} - Password: {self.new_credential.password}"),pyperclip.paste())
+        self.assertEqual('McGee',pyperclip.paste())
+        print(pyperclip.paste())
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
