@@ -71,6 +71,12 @@ class TestCredentials(unittest.TestCase):
         self.facebook.save_credentials()
         self.assertEqual(len(Credential.credential_list), 2)
 
+    def test_display_credentials(self):
+        '''
+        test_display_credentials to see if the new information can be displayed
+        '''
+        self.assertListEqual(Credential.display_credentials(),Credential.credential_list)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
