@@ -1,4 +1,6 @@
 import pyperclip
+import string
+import random
 
 
 class User:
@@ -43,6 +45,14 @@ class Credential:
 	        Function to save a newly created user instance
 	        '''
             Credential.credential_list.append(self)
+
+    def generate_password(self, size =8,char=string.ascii_uppercase+ ascii_lowercase + string.digits): 
+        '''
+        Function to generate a password
+        '''  
+        gen_pass=''.join(random.choice(char) for _ in range(size))
+        self.password = gen_pass
+        return self.password
 
     @classmethod
     def display_credentials(cls):
